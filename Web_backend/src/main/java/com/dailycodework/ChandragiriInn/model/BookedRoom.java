@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-
 @Entity
 @Getter
 @Setter
@@ -17,7 +16,7 @@ import java.time.LocalDate;
 public class BookedRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long bookingId;
+    private Long bookingId;
 
     @Column(name = "check_in")
     private LocalDate checkInDate;
@@ -26,7 +25,7 @@ public class BookedRoom {
     private LocalDate checkOutDate;
 
     @Column(name = "guest_fullName")
-    private String guestFullName; 
+    private String guestFullName;
 
     @Column(name = "guest_email")
     private String guestEmail;
@@ -46,7 +45,14 @@ public class BookedRoom {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
+    public void setRoomId(Long roomId) {
+        if (room == null) {
+            room = new Room();
+        }
+        room.setId(roomId);
+    }
 
+    // Other methods and constructors
     public void calculateTotalNumberOfGuest(){
         this.totalNumOfGuest = this.NumOfAdults + NumOfChildren;
     }
